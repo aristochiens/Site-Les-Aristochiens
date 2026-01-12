@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos — Les Aristochiens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="CSS/Style.css">
+</head>
+<body>
+    <header class="nav-section">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="Accueil">
+                        <h1>Les Aristochiens</h1>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <a href="About" class="btn-nav">À propos de moi</a>
+                    <a href="Contact" class="btn-rdv"> Trouver le Salon <i class='bx bxs-map'></i></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <section class="hero">
+            <div class="hero-bg">
+                <img src="Ressources/Fond_marbre.jpg" alt="Fond marbre" aria-hidden="true">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="hero-inner">
+                    <div class="hero-copy">
+                        <h1>À propos de moi</h1>
+                        <p class="hero-sub">Passionnée par le toilettage et le bien-être animal, je mets mon savoir-faire au service de vos compagnons.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about-page">
+            <div class="container about-inner">
+                <!-- moved image before copy to make layout ordering explicit; CSS will place it to the right on wide screens -->
+                <div class="about-image">
+                    <img src="Ressources/A_propos_de_moi.jpg" alt="Toilettage en action" />
+                </div>
+                <div class="about-copy">
+                    <h2>Mon histoire</h2>
+                    <p>Moi, c'est Julie, 36 ans et toiletteuse par vocation. Je conçois mon métier comme un échange basé sur la confiance et la douceur. Loin des cadences industrielles, je m'engage à offrir à votre animal une attention particulière et des soins adaptés, le tout dans une ambiance calme et rassurante.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission -->
+        <section class="mission">
+            <div class="container">
+                <h2>Ma mission</h2>
+                <p>Pour moi, le toilettage va bien au-delà de l'esthétique. C'est avant tout une histoire de passion et de respect pour l'animal. Je ne cherche pas le travail à la chaîne : je prends le temps nécessaire pour comprendre votre compagnon, ses habitudes et ses craintes éventuelles. Mon métier, c'est de lui offrir un moment de bien-être et de vous le rendre heureux et en pleine forme. Je vous accueille simplement, avec le sourire et l'envie de bien faire.</p>
+            </div>
+        </section>
+
+        <!-- Galerie -->
+        <section class="gallery">
+            <div class="container">
+                <h2>Galerie</h2>
+                <div class="gallery-wrapper">
+                    <!-- Paginated gallery (CSS-only): 2 pages, 6 images per page -->
+                    <div class="gallery-pager">
+                        <input type="radio" name="pg-a" id="pg-a-1" checked>
+                        <input type="radio" name="pg-a" id="pg-a-2">
+
+                        <div class="gallery-grid">
+                            <!-- page 1 -->
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/1.jpg" alt="Galerie 1"></div>
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/2.jpg" alt="Galerie 2"></div>
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/3.jpg" alt="Galerie 3"></div>
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/4.jpg" alt="Galerie 4"></div>
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/5.jpg" alt="Galerie 5"></div>
+                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/6.jpg" alt="Galerie 6"></div>
+
+                            <!-- page 2 (additional images) -->
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/7.jpg" alt="Galerie 7"></div>
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/8.jpg" alt="Galerie 8"></div>
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/9.jpg" alt="Galerie 9"></div>
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/10.jpg" alt="Galerie 10"></div>
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/11.jpg" alt="Galerie 11"></div>
+                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/12.jpg" alt="Galerie 12"></div>
+                        </div>
+
+                        <div class="pager-controls" aria-hidden="false">
+                            <label for="pg-a-1" class="arrow prev" aria-label="Précédent"><i class='bx bxs-left-arrow' aria-hidden="true"></i></label>
+                            <div class="dots">
+                                <label for="pg-a-1" class="dot" aria-label="Page 1"></label>
+                                <label for="pg-a-2" class="dot" aria-label="Page 2"></label>
+                            </div>
+                            <label for="pg-a-2" class="arrow next" aria-label="Suivant"><i class='bx bxs-right-arrow' aria-hidden="true"></i></label>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq">
+            <div class="container">
+                <h2>Questions fréquentes</h2>
+                <details>
+                    <summary>Faut-il prendre rendez-vous ?</summary>
+                    <p>Oui, les rendez-vous permettent d'organiser au mieux la journée et d'assurer un accueil calme pour votre compagnon.</p>
+                </details>
+                <details>
+                    <summary>Combien de temps dure une séance de toilettage ?</summary>
+                    <p>Chaque animal est unique, et la durée dépend de sa race, de l'état de son pelage et du soin demandé. En moyenne, comptez entre 1h30 et 2h. Je ne brusque jamais les étapes : je prends le temps nécessaire pour que le travail soit bien fait et que votre compagnon ne stresse pas.</p>
+                </details>
+                <details>
+                    <summary>Puis-je rester avec mon animal pendant la séance ?</summary>
+                    <p>Oui, avec plaisir ! La transparence est essentielle pour moi. Si vous souhaitez voir comment je travaille ou simplement rassurer votre compagnon par votre présence, vous êtes le bienvenu. Je vous demanderai juste de rester calme à côté pour que votre animal ne soit pas trop excité et que je puisse manier les ciseaux en toute sécurité.</p>
+                </details>
+                <details>
+                    <summary>Mon chien a beaucoup de nœuds, allez-vous devoir le raser ?</summary>
+                    <p>Mon objectif est toujours de sauver le poil si c'est possible. Cependant, si les nœuds sont trop près de la peau, le démêlage peut devenir très douloureux pour l'animal. Dans ce cas précis, et pour son bien-être, une tonte courte peut être nécessaire pour repartir sur des bases saines. Nous en discuterons ensemble avant de commencer.</p>
+                </details>
+                <details>
+                    <summary>Acceptez-vous les chiens craintifs ou difficiles ?</summary>
+                    <p>Oui, tout à fait. La patience est au cœur de mon métier. Si votre chien a du caractère ou s'il est très anxieux, prévenez-moi simplement lors de la prise de rendez-vous. Cela me permet de bloquer un créneau plus large pour y aller à son rythme, faire des pauses et le rassurer.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-about">
+            <div class="container" style="text-align:center;">
+                <a href="contact.html" class="btn hero-cta">Prendre rendez-vous</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="container footer-inner">
+                <div class="footer-columns">
+                    <div class="footer-col footer-brand">
+                        <img src="Ressources/Logo_Chien.svg" alt="Les Aristochiens logo">
+                        <h4>Les Aristochiens</h4>
+                        <p>Salon de toilettage — Bien-être et beauté pour vos compagnons</p>
+                    </div>
+                    <div class="footer-col footer-menu">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="About.html">À propos</a></li>
+                            <li><a href="#prestations">Nos prestations</a></li>
+                            <li><a href="#rdv">Prendre rendez-vous</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="#products">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col footer-contact">
+                        <h4>Contact</h4>
+                        <address>
+                            03 27 80 95 71<br>
+                            contact@aristochiens.local
+                        </address>
+                    </div>
+                    <div class="footer-col footer-social">
+                        <h4>Suivez-nous</h4>
+                        <div class="social-links">
+                            <a class="social-link" href="#"><i class='bx bxl-facebook'></i></a>
+                            <a class="social-link" href="#"><i class='bx bxl-instagram'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <div class="legal"><a href="#">Mentions légales</a></div>
+                <div class="copyright">&copy; 2026 Les Aristochiens — Tous droits réservés</div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
