@@ -67,3 +67,4 @@ RewriteRule ^Contact/?$ /contact.html [L]
 
 # Page par défaut
 DirectoryIndex index.html
+
