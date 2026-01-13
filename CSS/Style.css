@@ -278,8 +278,21 @@ vc-time { color: #fff; font-size: 0.95rem; margin-right: 0.4rem; min-width: 96px
 .gallery-pager input { display: none; }
 /* Items visible by default so desktop grid works regardless of page wrappers */
 .gallery-grid .gallery-item { display: block; }
+
 /* Keep .gallery-page transparent on desktop (its children participate in the grid). On mobile we turn it into a page container */
 .gallery-grid .gallery-page { display: contents; }
+
+/* Desktop pagination: show only the selected page (page-1 or page-2) via radio inputs.
+   Mobile retains swipe behavior handled by media queries above. */
+@media (min-width: 481px) {
+  /* hide both pages by default, show the checked one */
+  .gallery-grid .page-1, .gallery-grid .page-2 { display: none; }
+  #pg-1:checked ~ .gallery-grid .page-1 { display: block; }
+  #pg-2:checked ~ .gallery-grid .page-2 { display: block; }
+
+  /* ensure pager controls are visible on desktop */
+  .pager-controls { display:flex; }
+}
 
 .pager-controls { display:flex; align-items:center; justify-content:center; gap:1rem; margin-top:0.9rem; min-height:56px; }
 .pager-controls .arrow {
