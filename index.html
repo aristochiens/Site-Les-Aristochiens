@@ -9,156 +9,148 @@
     <link rel="stylesheet" href="CSS/Style.css">
 </head>
 
-<body>
-    <header class="nav-section">
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <a href="Accueil">
-                        <h1>Les Aristochiens</h1>
-                    </a>
-                </div>
-                <div class="nav-links">
-                    <a href="About" class="btn-nav">À propos de moi</a>
-                    <a href="Contact" class="btn-rdv"> Trouver le Salon <i class='bx bxs-map'></i></a>
-                </div>
-            </nav>
-        </div>
-    </header>
+<script>
+ (function(){
+    function init(){
+        const video = document.querySelector('.lazy-video');
+        if(!video){
+            console.info('No .lazy-video element found on this page.');
+            return;
+        }
+        const source = video.querySelector('source[data-src]');
 
-    <main class="site-content">
+        function loadVideo(){
+            if(!source || !source.dataset || !source.dataset.src){
+                console.error('Video <source> with data-src missing. Vérifie le chemin et la casse des fichiers sur le serveur.');
+                return;
+            }
+            if(source.src !== source.dataset.src) source.src = source.dataset.src;
+            try{ video.load(); }catch(e){ console.warn('video.load() failed', e); }
+            try{ video.muted = true; video.playsInline = true; }catch(e){}
+            const p = video.play();
+            if(p && typeof p.catch === 'function') p.catch(() => { console.info('Autoplay blocked by browser'); });
+        }
 
-        <!-- Hero section -->
-        <section class="hero">
-            <div class="hero-bg">
-                <img src="Ressources/Fond_marbre.jpg" alt="Fond marbre" aria-hidden="true">
-                <div class="hero-overlay"></div>
-            </div>
-            <div class="container">
-                <div class="hero-inner">
-                    <div class="hero-copy-index">
-                        <h1>le bien-être et la beauté pour tous vos compagnons</h1>
-                        <p class="hero-sub">Chiens, Chats et N.A.C !</p>
-                        <a href="#rdv" class="btn hero-cta">Je Souhaite prendre rendez-vous <i class="btn bx bx-phone-call" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        function setupVideoControls(){
+            const container = video.closest('.interview-inner');
+            if(!container) return;
+            const controls = container.querySelector('.video-controls');
+            if(!controls) return;
 
-        <!-- About section -->
-        <section id="about" class="about">
-            <div class="container about-inner">
-                <div class="about-copy">
-                    <h2><a href="About">A propos de moi</a></h2>
-                    <p>Moi, c'est Julie, 36 ans et toiletteuse par vocation. Je conçois mon métier comme un échange basé sur la confiance et la douceur. Loin des cadences industrielles, je m'engage à offrir à votre animal une attention particulière et des soins adaptés, le tout dans une ambiance calme et rassurante.</p>
-                </div>
-                <div class="about-image">
-                    <img src="Ressources/A_propos_de_moi.jpg" alt="Toilettage Les Aristochiens">
-                </div>
-            </div>
-        </section>
+            try { video.controls = false; } catch(e) {}
+            container.classList.add('has-controls');
 
-        <!-- Interview -->
-        <section class="interview">
-            <div class="container">
-                <h2>Interview</h2>
-                <div class="interview-inner">
-                    <video class="lazy-video" controls preload="none" poster="Ressources/Gallerie/15.jpg" aria-label="Interview vidéo" playsinline muted>
-                        <source data-src="Ressources/Interview.mp4" type="video/mp4">
-                        Votre navigateur ne supporte pas la lecture vidéo. <a href="Ressources/Aristochiens%20Interview%20final.mp4">Télécharger la vidéo</a>
-                    </video>
+            const btnPlay = controls.querySelector('.vc-play');
+            const btnMute = controls.querySelector('.vc-mute');
+            const btnFull = controls.querySelector('.vc-full');
+            const seek = controls.querySelector('.vc-seek');
+            const time = controls.querySelector('.vc-time');
 
-                    <div class="video-controls" role="group" aria-label="Contrôles vidéo">
-                        <button class="vc-btn vc-play" aria-pressed="false" aria-label="Lire"><i class='bx bx-play' aria-hidden="true"></i></button>
+            function formatTime(t){
+                if(!isFinite(t)) return '0:00';
+                const hrs = Math.floor(t / 3600);
+                const mins = Math.floor((t % 3600) / 60);
+                const secs = Math.floor(t % 60);
+                const mm = (hrs ? String(mins).padStart(2,'0') : mins);
+                const ss = String(secs).padStart(2,'0');
+                return (hrs ? hrs + ':' + mm + ':' + ss : mm + ':' + ss);
+            }
 
-                        <input class="vc-seek" type="range" min="0" max="100" value="0" aria-label="Position vidéo">
-                        <span class="vc-time" aria-live="polite">0:00 / 0:00</span>
+            function updatePlay(){
+                if(video.paused){
+                    btnPlay.innerHTML = "<i class='bx bx-play' aria-hidden='true'></i>";
+                    btnPlay.setAttribute('aria-pressed','false');
+                } else {
+                    btnPlay.innerHTML = "<i class='bx bx-pause' aria-hidden='true'></i>";
+                    btnPlay.setAttribute('aria-pressed','true');
+                }
+            }
 
-                        <button class="vc-btn vc-mute" aria-pressed="true" aria-label="Muet"><i class='bx bx-volume-mute' aria-hidden="true"></i></button>
-                        <button class="vc-btn vc-full" aria-label="Plein écran"><i class='bx bx-fullscreen' aria-hidden="true"></i></button>
-                    </div>
+            function updateMute(){
+                if(video.muted){
+                    btnMute.innerHTML = "<i class='bx bx-volume-mute' aria-hidden='true'></i>";
+                    btnMute.setAttribute('aria-pressed','true');
+                } else {
+                    btnMute.innerHTML = "<i class='bx bx-volume-full' aria-hidden='true'></i>";
+                    btnMute.setAttribute('aria-pressed','false');
+                }
+            }
 
-                </div>
-            </div>
-        </section>
+            function updateTime(){
+                const d = isFinite(video.duration) ? video.duration : 0;
+                const c = isFinite(video.currentTime) ? video.currentTime : 0;
+                const pct = d ? (c / d) * 100 : 0;
+                if(seek){ seek.value = pct; seek.setAttribute('aria-valuenow', Math.round(pct)); }
+                if(time){ time.textContent = formatTime(c) + ' / ' + (d ? formatTime(d) : '0:00'); }
+            }
 
-        <!-- Section Prendre rendez-vous -->
-        <section class="rdv-section" id="rdv">
-            <div class="container rdv-inner">
-                <div class="about-copy">
-                    <h2><a href="Contact">Contact</a></h2>
-                </div>
-                    <div class="contact-cards">
-                        <div class="contact-card">
-                            <i class='bx bx-phone'></i>
-                            <div>
-                                <h3>Appelez-nous</h3>
-                                <a href="tel:0327809571">03 27 80 95 71</a>
-                            </div>
-                        </div>
+            if(seek){
+                seek.addEventListener('input', (e) => {
+                    const d = isFinite(video.duration) ? video.duration : 0;
+                    if(d){ video.currentTime = (e.target.value / 100) * d; }
+                });
+            }
 
-                        <div class="contact-card">
-                            <i class='bx bx-envelope'></i>
-                            <div>
-                                <h3>Email</h3>
-                                <a href="mailto:juliequeva@outlook.fr">juliequeva@outlook.fr</a>
-                            </div>
-                        </div>
+            btnPlay.addEventListener('click', () => {
+                if(video.paused) {
+                    const p = video.play();
+                    if(p && typeof p.catch === 'function') p.catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
 
-                        <div class="contact-card">
-                            <i class='bx bx-map'></i>
-                            <div>
-                                <h3>Adresse</h3>
-                                <p>12 Rue Patoux 59580 Aniche, France</p>
-                            </div>
-                        </div>
+            btnMute.addEventListener('click', () => {
+                video.muted = !video.muted;
+                updateMute();
+            });
 
-                        <div class="contact-card">
-                            <i class='bx bx-time-five'></i>
-                            <div>
-                                <h3>Horaires</h3>
-                                <p>Mardi - Vendredi : 8h30 - 12h30 / 13h30 - 17h30<br>Samedi : 9h - 12h</p>
-                            </div>
-                        </div>
-                    </div>
+            btnFull.addEventListener('click', () => {
+                const el = container;
+                if(document.fullscreenElement){
+                    document.exitFullscreen();
+                } else if(el.requestFullscreen){
+                    el.requestFullscreen();
+                }
+            });
 
-                    <div class="contact-map full-width">
-                        <div class="map-card">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1070.826740636808!2d3.238972993607323!3d50.331684820388475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2c73107af08d3%3A0x8fffc7097efd514a!2sLes%20Aristochiens!5e0!3m2!1sfr!2sfr!4v1767879206837!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                    </div>
-        </section>
+            video.addEventListener('loadedmetadata', updateTime);
+            video.addEventListener('timeupdate', updateTime);
+            video.addEventListener('play', updatePlay);
+            video.addEventListener('pause', updatePlay);
+            video.addEventListener('volumechange', updateMute);
 
-                <!-- Galerie -->
-        <section class="gallery">
-            <div class="container">
-                <h2>Galerie</h2>
-                <div class="gallery-wrapper">
-                    <!-- Paginated gallery (CSS-only): 2 pages, 6 images per page -->
-                    <div class="gallery-pager">
-                        <input type="radio" name="pg" id="pg-1" checked>
-                        <input type="radio" name="pg" id="pg-2">
+            video.muted = false;
+            updatePlay();
+            updateMute();
+            updateTime();
+        }
 
-                        <div class="gallery-grid">
-                            <!-- page 1 -->
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/1.jpg" alt="Galerie 1"></div>
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/2.jpg" alt="Galerie 2"></div>
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/3.jpg" alt="Galerie 3"></div>
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/4.jpg" alt="Galerie 4"></div>
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/5.jpg" alt="Galerie 5"></div>
-                            <div class="gallery-item page-1"><img src="Ressources/Gallerie/6.jpg" alt="Galerie 6"></div>
+        setupVideoControls();
 
-                            <!-- page 2 (additional images) -->
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/7.jpg" alt="Galerie 7"></div>
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/8.jpg" alt="Galerie 8"></div>
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/9.jpg" alt="Galerie 9"></div>
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/10.jpg" alt="Galerie 10"></div>
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/11.jpg" alt="Galerie 11"></div>
-                            <div class="gallery-item page-2"><img src="Ressources/Gallerie/12.jpg" alt="Galerie 12"></div>
-                        </div>
+        if('IntersectionObserver' in window){
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        loadVideo();
+                        obs.disconnect();
+                    }
+                });
+            }, {rootMargin: '200px 0px'});
+            obs.observe(video);
+        } else {
+            loadVideo();
+        }
+    }
 
-                        <div class="pager-controls" aria-hidden="false">
-                            <label for="pg-1" class="arrow prev" aria-label="Précédent"><i class='bx bxs-left-arrow' aria-hidden="true"></i></label>
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+    window.addEventListener('load', init, {once:true});
+ })();
+</script>
                             <div class="dots">
                                 <label for="pg-1" class="dot" aria-label="Page 1"></label>
                                 <label for="pg-2" class="dot" aria-label="Page 2"></label>
@@ -181,7 +173,7 @@
                 <div class="products-grid">
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/biogance_PuppyEar.png" alt="Biogance Puppy Ear">
+                            <img src="/Ressources/produits/biogance_PuppyEar.png" alt="Biogance Puppy Ear">
                         </div>
                         <div class="product-body">
                             <div class="product-title">Biogance - Puppy Ear</div>
@@ -191,7 +183,7 @@
 
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/biogance_Shampooing.png" alt="Biogance Shampooing">
+                            <img src="/Ressources/produits/biogance_Shampooing.png" alt="Biogance Shampooing">
                         </div>
                         <div class="product-body">
                             <div class="product-title">Biogance - Shampooing</div>
@@ -201,7 +193,7 @@
 
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/IDEALPLANT_Parfum_Violette.png" alt="IDEALPLANT Parfum Violette">
+                            <img src="/Ressources/produits/IDEALPLANT_Parfum_Violette.png" alt="IDEALPLANT Parfum Violette">
                         </div>
                         <div class="product-body">
                             <div class="product-title">IDEALPLANT - Parfum</div>
@@ -211,7 +203,7 @@
 
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/LADYWHITE_Shampoing_concentré.png" alt="LadyWhite Shampoing concentré">
+                            <img src="/Ressources/produits/LADYWHITE_Shampoing_concentré.png" alt="LadyWhite Shampoing concentré">
                         </div>
                         <div class="product-body">
                             <div class="product-title">LadyWhite - Shampoing concentré</div>
@@ -221,7 +213,7 @@
 
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/Organissime_EarLotion.png" alt="Organissime Ear Lotion">
+                            <img src="/Ressources/produits/Organissime_EarLotion.png" alt="Organissime Ear Lotion">
                         </div>
                         <div class="product-body">
                             <div class="product-title">Organissime - Ear Lotion</div>
@@ -231,7 +223,7 @@
 
                     <div class="product-card">
                         <div class="product-thumb">
-                            <img src="Ressources/produits/Organissime_shampoo-Repairing.png" alt="Organissime Shampoo Repairing">
+                            <img src="/Ressources/produits/Organissime_shampoo-Repairing.png" alt="Organissime Shampoo Repairing">
                         </div>
                         <div class="product-body">
                             <div class="product-title">Organissime - Shampoo Repairing</div>
@@ -275,28 +267,28 @@
             <div class="container footer-inner">
                 <div class="footer-columns">
                     <div class="footer-col footer-brand">
-                        <img src="Ressources/Logo_Chien.svg" alt="Les Aristochiens logo">
+                        <img src="/Ressources/Logo_Chien.svg" alt="Les Aristochiens logo">
                         <h4>Les Aristochiens</h4>
                         <p>Salon de toilettage — Bien-être et beauté pour vos compagnons</p>
                     </div>
                     <div class="footer-col footer-menu">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="About.html">À propos</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="/About/">À propos</a></li>
+                            <li><a href="/Contact/">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-col footer-contact">
                         <h4>Contact</h4>
                         <address>
                             03 27 80 95 71<br>
-                            juliequeva@outlook.fr
+                            lesaristochiens59@gmail.com
                         </address>
                     </div>
                     <div class="footer-col footer-social">
                         <h4>Suivez-nous</h4>
                         <div class="social-links">
-                            <a class="social-link" href="#"><i class='bx bxl-facebook'></i></a>
+                            <a class="social-link" href="https://www.facebook.com/p/Les-Aristochiens-100063722915795/"><i class='bx bxl-facebook'></i></a>
                             <a class="social-link" href="#"><i class='bx bxl-instagram'></i></a>
                         </div>
                     </div>
