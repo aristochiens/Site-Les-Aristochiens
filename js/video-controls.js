@@ -5,10 +5,7 @@
       return;
     }
 
-    // Hide native controls if JS is working
-    video.removeAttribute('controls');
-    // Also set property just in case
-    try { video.controls = false; } catch (e) { }
+
 
     const container = video.closest('.interview-inner');
     if (!container) return;
@@ -19,6 +16,11 @@
 
     // Show custom controls
     container.classList.add('has-controls');
+
+    // Hide native controls if JS is working AND we have custom controls
+    video.removeAttribute('controls');
+    // Also set property just in case
+    try { video.controls = false; } catch (e) { }
 
     const btnPlay = controls.querySelector('.vc-play');
     const btnMute = controls.querySelector('.vc-mute');
