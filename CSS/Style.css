@@ -719,8 +719,12 @@ span {
 
 
 /* Pagination / pages handling */
+/* Pagination / pages handling */
 .gallery-pager input {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Items visible by default so desktop grid works regardless of page wrappers */
@@ -1757,27 +1761,11 @@ a[href^="tel"] {
 
 @media (max-width: 480px) {
 
-  /* Single column on phones for simple, clear view */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    height: auto;
-    overflow: visible;
+  /* Hide gallery on mobile as requested */
+  .gallery {
+    display: none !important;
   }
 
-  .gallery-item {
-    width: 100%;
-    /* display: block !important; */
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border-radius: 12px;
-  }
 }
 
 /* 12.6 Products ------------------------------------------------------ */
