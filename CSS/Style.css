@@ -1,13 +1,13 @@
-#pg-a-1:checked~.gallery-grid .page-1 {
+#pg-1:checked~.gallery-grid .page-1 {
   display: block;
 }
 
-#pg-a-2:checked~.gallery-grid .page-2 {
+#pg-2:checked~.gallery-grid .page-2 {
   display: block;
 }
 
-#pg-a-1:checked~.pager-controls .dots label[for="pg-a-1"],
-#pg-a-2:checked~.pager-controls .dots label[for="pg-a-2"] {
+#pg-1:checked~.pager-controls .dots label[for="pg-1"],
+#pg-2:checked~.pager-controls .dots label[for="pg-2"] {
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -1724,8 +1724,15 @@ a[href^="tel"] {
     gap: 0.8rem;
   }
 
+  /* Ensure all pages are visible on mobile/tablet so we just have a long list */
+  .gallery-grid .page-1,
+  .gallery-grid .page-2 {
+    display: contents !important;
+  }
+
   .gallery-item {
     border-radius: 8px;
+    display: block !important;
   }
 
   .gallery-item img {
@@ -1733,65 +1740,39 @@ a[href^="tel"] {
     height: auto;
   }
 
-  /* CSS pager controls slightly smaller */
-  .pager-controls .arrow {
-    width: 48px;
-    height: 48px;
-    font-size: 1.25rem;
+  /* Hide pager controls on tablet/mobile as we show all images */
+  .pager-controls {
+    display: none !important;
   }
 
-  .pager-controls .dot {
-    width: 10px;
-    height: 10px;
-  }
-
-  /* Horizontal scroller: show larger slides */
-  .gallery-track .gallery-item {
-    flex: 0 0 46%;
+  /* Horizontal scroller: unused, ensure hidden if it conflicts */
+  .gallery-track {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
 
-  /* Single column on phones */
+  /* Single column on phones for simple, clear view */
   .gallery-grid {
+    display: grid;
     grid-template-columns: 1fr;
-    gap: 0.6rem;
+    gap: 1rem;
+    height: auto;
+    overflow: visible;
   }
 
   .gallery-item {
-    display: block;
+    width: 100%;
+    display: block !important;
   }
 
   .gallery-item img {
     width: 100%;
     height: auto;
     aspect-ratio: 4/3;
-  }
-
-  /* Pager compact */
-  .pager-controls {
-    gap: 0.5rem;
-  }
-
-  .pager-controls .arrow {
-    width: 44px;
-    height: 44px;
-    font-size: 1.05rem;
-  }
-
-  .pager-controls .dot {
-    width: 9px;
-    height: 9px;
-  }
-
-  /* For gallery track (if used), show one slide at a time */
-  .gallery-track {
-    padding-bottom: 0.6rem;
-  }
-
-  .gallery-track .gallery-item {
-    flex: 0 0 82%;
+    object-fit: cover;
+    border-radius: 12px;
   }
 }
 
