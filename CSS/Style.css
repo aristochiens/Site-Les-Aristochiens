@@ -735,26 +735,30 @@ span {
 
 /* Desktop pagination: show only the selected page (page-1 or page-2) via radio inputs.
    Mobile retains swipe behavior handled by media queries above. */
-@media (min-width: 481px) {
+/* Mobile retains swipe behavior handled by media queries above. */
 
-  /* hide both pages by default, show the checked one */
-  .gallery-grid .page-1,
-  .gallery-grid .page-2 {
-    display: none;
-  }
+/* hide both pages by default, show the checked one */
+.gallery-grid .page-1,
+.gallery-grid .page-2 {
+  display: none;
+}
 
-  #pg-1:checked~.gallery-grid .page-1 {
-    display: block;
-  }
+#pg-1:checked~.gallery-grid .page-1 {
+  display: block;
+}
 
-  #pg-2:checked~.gallery-grid .page-2 {
-    display: block;
-  }
+#pg-2:checked~.gallery-grid .page-2 {
+  display: block;
+}
 
-  /* ensure pager controls are visible on desktop */
-  .pager-controls {
-    display: flex;
-  }
+/* ensure pager controls are visible on desktop */
+.pager-controls {
+  display: flex;
+}
+
+/* ensure pager controls are visible on desktop */
+.pager-controls {
+  display: flex;
 }
 
 .pager-controls {
@@ -1725,10 +1729,10 @@ a[href^="tel"] {
   }
 
   /* Ensure all pages are visible on mobile/tablet so we just have a long list */
-  .gallery-grid .page-1,
+  /* .gallery-grid .page-1,
   .gallery-grid .page-2 {
     display: block !important;
-  }
+  } */
 
   .gallery-item {
     border-radius: 8px;
@@ -1741,9 +1745,9 @@ a[href^="tel"] {
   }
 
   /* Hide pager controls on tablet/mobile as we show all images */
-  .pager-controls {
+  /* .pager-controls {
     display: none !important;
-  }
+  } */
 
   /* Horizontal scroller: unused, ensure hidden if it conflicts */
   .gallery-track {
@@ -1764,7 +1768,7 @@ a[href^="tel"] {
 
   .gallery-item {
     width: 100%;
-    display: block !important;
+    /* display: block !important; */
   }
 
   .gallery-item img {
