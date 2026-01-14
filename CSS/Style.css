@@ -1727,7 +1727,7 @@ a[href^="tel"] {
   /* Ensure all pages are visible on mobile/tablet so we just have a long list */
   .gallery-grid .page-1,
   .gallery-grid .page-2 {
-    display: contents !important;
+    display: block !important;
   }
 
   .gallery-item {
