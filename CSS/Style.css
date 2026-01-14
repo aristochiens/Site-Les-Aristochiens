@@ -1048,6 +1048,13 @@ span {
   font-family: 'Arno Pro', 'ArnoPro', serif;
 }
 
+/* Ensure phone links don't turn blue on mobile */
+a[href^="tel"] {
+  color: inherit;
+  text-decoration: none;
+}
+
+
 /* Center RDV contact block (cards + map) — removed side margins to let cards and map use the full container width */
 .rdv-section .contact-cards {
   display: grid;
@@ -1704,7 +1711,7 @@ span {
     border-radius: 12px;
   }
 }
-}
+
 
 /* 12.5 Gallery ------------------------------------------------------- */
 /* gallery grid / pager responsive rules */
@@ -2006,7 +2013,8 @@ span {
   .gallery-grid {
     display: flex;
     gap: 0.6rem;
-    height: calc((100vw - 2rem) * 1.5);
+    height: auto;
+    aspect-ratio: 4/5;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
